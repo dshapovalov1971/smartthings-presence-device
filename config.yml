@@ -1,0 +1,5 @@
+name: 'Local Network Device Connection Based Presence Sensor'
+packageKey: 'dsh.presence-device'
+permissions:
+  lan: {}
+  discovery: {}
