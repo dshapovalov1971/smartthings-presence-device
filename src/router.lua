@@ -16,8 +16,7 @@ function Router.connected_devices()
   }
   local r = {}
   for m in (table.concat(rc)):gmatch "var TableTagValueList = (%b'');" do
-    local l = -1;
-    local p, mac;
+    local l, w, p, mac = -1, true, nil, nil;
     for v in (m:gsub('\'', ''):gsub('||', '| |')):gmatch '[^|]+' do
       if l < 0 then
         l = tonumber(v) or l;
@@ -27,10 +26,20 @@ function Router.connected_devices()
           r[v] = ''
           mac = v
         elseif p == 3 then
-          r[mac] = v == ' ' and '' or v
+          r[mac] = not w and v ~= ' ' and v ~= '' and v~= '--'
+                   and not v:find('Ring-', 1, true)
+                   and not v:find('DESKTOP-', 1, true)
+                   and not v:find('RingPro-', 1, true)
+                   and not v:find('hubv3-', 1, true)
+                   and not v:find('MyQ-', 1, true)
+                   and not v:find('MyCloud-', 1, true)
+                   and v or nil
           p = -1
+          w = true
         end
         p = p + 1
+      else 
+        w = false
       end
     end
   end

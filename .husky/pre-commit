@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+export LUA_PATH="/home/codespace/.luarocks/share/lua/5.3/?.lua;/home/codespace/.luarocks/share/lua/5.3/?/init.lua;/usr/local/share/lua/5.3/?.lua;/usr/local/share/lua/5.3/?/init.lua;/workspaces/codespaces-blank/lua_libs-api_v4_47X_beta/lua_libs-api_v4/?.lua;/workspaces/codespaces-blank/lua_libs-api_v4_47X_beta/lua_libs-api_v4/?/init.lua;/usr/local/lib/lua/5.3/?.lua;/usr/local/lib/lua/5.3/?/init.lua;/usr/share/lua/5.3/?.lua;/usr/share/lua/5.3/?/init.lua;./?.lua;./?/init.lua;src/?.lua;src/?/init.lua;;"
+lua src/unit_tests.lua

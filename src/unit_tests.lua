@@ -1,10 +1,15 @@
-local test = require 'integration_test'
-local cosock = require "cosock"
-local http = cosock.asyncify "socket.http"
+require 'integration_test'
+local lu = require('luaunit')
+local http = (require 'cosock').asyncify 'socket.http'
 local ltn12 = require 'ltn12'
-local utils = require "st.utils"
-local router = require('../src/router')
-
+package.loaded['st.driver'] = setmetatable({}, {
+  __call = function (_, _, _)
+    return {
+      call_on_schedule = function(_, _) end,
+      run = function () end
+    }
+  end,
+})
 http.request = function(p)
   if type(p) == 'string' then
     return 1, 200, {['set-cookie'] = 'cookie'}
@@ -71,31 +76,39 @@ http.request = function(p)
       ]]), p.sink)
   end
 end
-
-assert(utils.stringify_table(router.connected_devices(), '', true) == utils.stringify_table({
+local mockDeviceTable = {
   ['00:04:20:ef:e0:2f']="HarmonyHub",
-  ['00:14:ee:03:66:b7']="MyCloud-XEC16K",
   ['00:80:92:8c:df:d1']="BRW0080928CDFD1",
-  ['0c:1c:57:a9:01:0b']="Ring-a9010b",
   ['10:59:32:71:bd:6c']="TVRoomRoku",
   ['18:b4:30:bb:65:c3']="09AA01AC52160U70",
   ['18:b4:30:bb:bc:90']="09AA01AC53160FAW",
   ['18:b4:30:cf:2c:13']="09AA01RC321700CN",
-  ['28:6d:97:70:0c:79']="hubv3-3011000927",
-  ['30:45:11:44:80:31']="Ring-448031",
-  ['34:20:03:2d:d5:74']="",
-  ['34:20:03:57:18:e1']="",
-  ['34:20:03:57:2f:9c']="",
-  ['52:20:fc:0c:df:53']="",
-  ['5c:96:66:dc:88:68']="--",
   ['62:78:a5:f5:72:fa']="DSH",
   ['6a:2a:ef:27:d1:05']="SM-R860",
-  ['7c:72:e4:90:26:08']="--",
   ['ac:ae:19:ba:00:8f']="Basement",
   ['c0:ee:40:8e:11:f0']="MyArcticSpa0",
-  ['c8:b8:2f:86:a5:21']="eero",
   ['d4:63:c6:62:8b:23']="android-5ba69c37733ed8e8",
-  ['e0:4f:43:a4:2a:35']="RingPro-35",
   ['e4:fd:45:d3:22:e1']="LAPTOP-VF7ADLII",
-  ['f0:45:da:3c:cd:37']="Ring-3ccd37",
-}, '', true));
+}
+
+TestRouter = {}
+  local router = require('router')
+
+  function TestRouter.testDevices()
+    lu.assertEquals(router.connected_devices(), mockDeviceTable)
+  end
+
+
+TestInit = {}
+  local init = require('init')
+  package.loaded['router'] = {
+    connected_devices = function ()
+      return mockDeviceTable
+    end
+  }
+
+  function TestInit.test()
+  end
+
+
+os.exit(lu.LuaUnit.run('-v'))

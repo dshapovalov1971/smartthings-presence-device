@@ -1,0 +1,8 @@
+name: network.presence
+components:
+- id: main
+  capabilities:
+  - id: presenceSensor
+    version: 1
+  categories:
+  - name: PresenceSensor
