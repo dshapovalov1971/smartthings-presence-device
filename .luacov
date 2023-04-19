@@ -1,2 +1,5 @@
-reporter = "html"
-reportfile = "luacov.report.html"
+---@diagnostic disable: lowercase-global
+reporter = 'html'
+reportfile = 'luacov.report.html'
+runreport = true
+include = { 'src/' }
