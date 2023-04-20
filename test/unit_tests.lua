@@ -1,4 +1,5 @@
 local test = require 'integration_test'
+require '../env'
 local caps = require 'st.capabilities'
 require 'st.capabilities.generated.types.PresenceState'
 local lu = require('luaunit')
@@ -20,15 +21,14 @@ local mockDeviceTable = {
 }
 
 TestRouter = {}
-  local routerURL = 'http://192.168.0.1/AttachedDevices_new.htm'
   http.request = function(p)
     if type(p) == 'string' then
-      lu.assertEquals(p, routerURL)
+      lu.assertEquals(p, RouterUrl)
       return 1, 200, {['set-cookie'] = 'cookie'}
     else
-      lu.assertEquals(p.url, routerURL)
-      lu.assertEquals(p.user, 'admin')
-      lu.assertEquals(p.password, 'xxxxx')
+      lu.assertEquals(p.url, RouterUrl)
+      lu.assertEquals(p.user, RouterUsername)
+      lu.assertEquals(p.password, RouterPassword)
       lu.assertEquals(p.headers, { cookie = 'cookie' })
       ltn12.pump.all(ltn12.source.string([[
         }

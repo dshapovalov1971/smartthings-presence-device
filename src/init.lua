@@ -1,6 +1,7 @@
 local Driver = require 'st.driver'
 local caps = require 'st.capabilities'
 local router = require 'router'
+require '../env'
 
 local d = Driver('Network Presence Driver', {
   discovery = function (driver, _, should_continue)
@@ -33,7 +34,7 @@ local d = Driver('Network Presence Driver', {
   end,
 })
 
-d:call_on_schedule(30, function ()
+d:call_on_schedule(CheckInterval, function ()
   local devices, present, not_present = {}, caps.presenceSensor.presence.present(), caps.presenceSensor.presence.not_present()
   for _, device in pairs(d:get_devices()) do
     devices[device.device_network_id] = { device = device, new_state = not_present }
