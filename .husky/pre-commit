@@ -1,7 +1,7 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
 . ~/.env
 lua -lluacov test/unit_tests.lua
-# [ $(hxnormalize -l 240 -x luacov.report.html | hxselect -s '\n' -c 'body div.total span.cov strong') == '100.0%' ]
-[[ $- == *i* ]] && echo 'Interactive' || echo 'Not interactive' 
+[ "$(hxnormalize -l 240 -x luacov.report.html | hxselect -s '\n' -c 'body div.total span.cov strong')" = "100.0%" ]
+# [ "$-" = *i* ] && echo 'Interactive' || echo 'Not interactive'
