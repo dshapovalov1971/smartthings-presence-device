@@ -3,5 +3,5 @@
 
 . ~/.env
 lua -lluacov test/unit_tests.lua
-[ "$(hxnormalize -l 240 -x luacov.report.html | hxselect -s '\n' -c 'body div.total span.cov strong')" = "100.0%" ]
+[ "$(hxnormalize -l 240 -x luacov.report.html | hxselect -s '\n' -c 'body div.total span.cov strong')" = "1001.0%" ]
 # [ "$-" = *i* ] && echo 'Interactive' || echo 'Not interactive'
