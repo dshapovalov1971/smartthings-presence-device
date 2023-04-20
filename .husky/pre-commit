@@ -4,4 +4,4 @@
 . ~/.env
 lua -lluacov test/unit_tests.lua
 # [ $(hxnormalize -l 240 -x luacov.report.html | hxselect -s '\n' -c 'body div.total span.cov strong') == '100.0%' ]
-[ $(hxnormalize -l 240 -x luacov.report.html | hxselect -s '\n' -c 'body div.total span.cov strong') == '100.0%' ] && echo '100%' || echo '<100%'
+[ '$(hxnormalize -l 240 -x luacov.report.html | hxselect -s '\n' -c 'body div.total span.cov strong')' == '100.0%' ] && echo '100%' || echo '<100%'
