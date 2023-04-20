@@ -94,11 +94,16 @@ TestRouter = {}
   end
   local router = require('router')
 
-  function TestRouter.testDevices()
+  function TestRouter.test()
     lu.assertEquals(router.connected_devices(), mockDeviceTable)
   end
 
 
+TestDriver = {}
+  function TestDriver.test()
+  end
+
+  
 TestInit = {}
   local get_state_cnt = 0
   local emit_present_cnt = 0

@@ -34,14 +34,14 @@ local d = Driver('Network Presence Driver', {
 })
 
 d:call_on_schedule(30, function ()
-  local devices = {}
+  local devices, present, not_present = {}, caps.presenceSensor.presence.present(), caps.presenceSensor.presence.not_present()
   for _, device in pairs(d:get_devices()) do
-    devices[device.device_network_id] = { device = device, new_state = caps.presenceSensor.presence.not_present() }
+    devices[device.device_network_id] = { device = device, new_state = not_present }
   end
 
   for id in pairs(router.connected_devices()) do
     if devices[id] then
-      devices[id].new_state = caps.presenceSensor.presence.present()
+      devices[id].new_state = present
     end
   end
 
