@@ -131,7 +131,7 @@ TestInit = {}
   })
   local scheduled_function
   local driver_template
-  local call_on_schedule_interval = 30
+  local call_on_schedule_interval = CheckInterval
   local mockUnitDriver
   local try_create_device_calls = {}
   local cancel_timer_cnt = 0
