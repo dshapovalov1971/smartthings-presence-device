@@ -3,3 +3,5 @@ packageKey: 'dsh.presence-device'
 permissions:
   lan: {}
   discovery: {}
+environment:
+  

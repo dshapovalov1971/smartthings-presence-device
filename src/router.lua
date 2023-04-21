@@ -1,6 +1,7 @@
 local http = (require 'cosock').asyncify "socket.http"
 local ltn12 = require 'ltn12'
-require '../env'
+require 'env'
+require 'env_secret'
 
 local Router = {}
 

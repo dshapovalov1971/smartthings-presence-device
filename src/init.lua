@@ -1,8 +1,7 @@
 local Driver = require 'st.driver'
 local caps = require 'st.capabilities'
 local router = require 'router'
-require '../env'
-require '../env_secret'
+require 'env'
 
 local present = caps.presenceSensor.presence.present()
 local not_present = caps.presenceSensor.presence.not_present()
