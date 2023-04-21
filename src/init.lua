@@ -3,6 +3,9 @@ local caps = require 'st.capabilities'
 local router = require 'router'
 require '../env'
 
+local present = caps.presenceSensor.presence.present()
+local not_present = caps.presenceSensor.presence.not_present()
+
 local d = Driver('Network Presence Driver', {
   discovery = function (driver, _, should_continue)
     local devices, t = {}, nil
@@ -34,8 +37,8 @@ local d = Driver('Network Presence Driver', {
   end,
 })
 
-d:call_on_schedule(CheckInterval, function ()
-  local devices, present, not_present = {}, caps.presenceSensor.presence.present(), caps.presenceSensor.presence.not_present()
+local status_update_function = function ()
+  local devices = {}
   for _, device in pairs(d:get_devices()) do
     devices[device.device_network_id] = { device = device, new_state = not_present }
   end
@@ -47,10 +50,13 @@ d:call_on_schedule(CheckInterval, function ()
   end
 
   for _, v in pairs(devices) do
-    if v.device.get_latest_state('main', 'presenceSensor', 'presence').value ~= v.new_state.value.value then
-      v.device.emit_event(v.new_state)
+    if v.device:get_latest_state('main', 'presenceSensor', 'presence', '') ~= v.new_state.value.value then
+      v.device:emit_event(v.new_state)
     end
   end
-end)
+end
+
+d:call_on_schedule(CheckInterval, status_update_function)
+d:call_with_delay(0, status_update_function)
 
 d:run()

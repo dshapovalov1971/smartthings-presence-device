@@ -5,6 +5,7 @@ require '../env'
 local Router = {}
 
   function Router.connected_devices()
+    local RouterUrl = 'http://192.168.0.1/AttachedDevices_new.htm'
     local rc = {}
     http.request {
       url = RouterUrl,
