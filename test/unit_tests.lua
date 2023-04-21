@@ -1,5 +1,6 @@
 local test = require 'integration_test'
 require '../env'
+require '../env_secret'
 local caps = require 'st.capabilities'
 require 'st.capabilities.generated.types.PresenceState'
 local lu = require('luaunit')

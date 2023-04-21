@@ -1,2 +1,3 @@
 .vscode
 luacov.*
+env_secret.lua
