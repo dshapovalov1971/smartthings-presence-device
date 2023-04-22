@@ -57,14 +57,15 @@ local Router = {}
             r[v] = ''
             mac = v
           elseif p == 3 then
-            r[mac] = not w and v ~= ' ' and v ~= '' and v~= '--'
+            r[mac] = not w and ((v == ' ' or v == '') and mac
+                    or v~= '--'
                     and not v:find('Ring-', 1, true)
                     and not v:find('DESKTOP-', 1, true)
                     and not v:find('RingPro-', 1, true)
                     and not v:find('hubv3-', 1, true)
                     and not v:find('MyQ-', 1, true)
                     and not v:find('MyCloud-', 1, true)
-                    and v or nil
+                    and v) or nil
             p = -1
             w = true
           end

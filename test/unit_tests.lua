@@ -18,6 +18,10 @@ local mockDeviceTable = {
   ['18:b4:30:bb:65:c3']="09AA01AC52160U70",
   ['18:b4:30:bb:bc:90']="09AA01AC53160FAW",
   ['18:b4:30:cf:2c:13']="09AA01RC321700CN",
+  ['34:20:03:2d:d5:74']="34:20:03:2d:d5:74",
+  ['34:20:03:57:18:e1']="34:20:03:57:18:e1",
+  ['34:20:03:57:2f:9c']="34:20:03:57:2f:9c",
+  ['52:20:fc:0c:df:53']="52:20:fc:0c:df:53",
   ['62:78:a5:f5:72:fa']="DSH",
   ['6a:2a:ef:27:d1:05']="SM-R860",
   ['ac:ae:19:ba:00:8f']="Basement",
@@ -216,14 +220,8 @@ TestInit = {}
     end)
     lu.assertItemsEquals(self.try_create_device_calls, {
       {
-          device_network_id="18:b4:30:cf:2c:13",
-          label="09AA01RC321700CN",
-          profile="network.presence",
-          type="LAN"
-      },
-      {
-          device_network_id="00:04:20:ef:e0:2f",
-          label="HarmonyHub",
+          device_network_id="e4:fd:45:d3:22:e1",
+          label="LAPTOP-VF7ADLII",
           profile="network.presence",
           type="LAN"
       },
@@ -234,8 +232,26 @@ TestInit = {}
           type="LAN"
       },
       {
-          device_network_id="10:59:32:71:bd:6c",
-          label="TVRoomRoku",
+          device_network_id="c0:ee:40:8e:11:f0",
+          label="MyArcticSpa0",
+          profile="network.presence",
+          type="LAN"
+      },
+      {
+          device_network_id="34:20:03:57:18:e1",
+          label="34:20:03:57:18:e1",
+          profile="network.presence",
+          type="LAN"
+      },
+      {
+          device_network_id="34:20:03:57:2f:9c",
+          label="34:20:03:57:2f:9c",
+          profile="network.presence",
+          type="LAN"
+      },
+      {
+          device_network_id="18:b4:30:cf:2c:13",
+          label="09AA01RC321700CN",
           profile="network.presence",
           type="LAN"
       },
@@ -246,14 +262,20 @@ TestInit = {}
           type="LAN"
       },
       {
-          device_network_id="18:b4:30:bb:bc:90",
-          label="09AA01AC53160FAW",
+          device_network_id="00:04:20:ef:e0:2f",
+          label="HarmonyHub",
           profile="network.presence",
           type="LAN"
       },
       {
-          device_network_id="18:b4:30:bb:65:c3",
-          label="09AA01AC52160U70",
+          device_network_id="34:20:03:2d:d5:74",
+          label="34:20:03:2d:d5:74",
+          profile="network.presence",
+          type="LAN"
+      },
+      {
+          device_network_id="10:59:32:71:bd:6c",
+          label="TVRoomRoku",
           profile="network.presence",
           type="LAN"
       },
@@ -270,12 +292,24 @@ TestInit = {}
           type="LAN"
       },
       {
-          device_network_id="c0:ee:40:8e:11:f0",
-          label="MyArcticSpa0",
+          device_network_id="18:b4:30:bb:65:c3",
+          label="09AA01AC52160U70",
           profile="network.presence",
           type="LAN"
       },
-    })
+      {
+          device_network_id="18:b4:30:bb:bc:90",
+          label="09AA01AC53160FAW",
+          profile="network.presence",
+          type="LAN"
+      },
+      {
+          device_network_id="52:20:fc:0c:df:53",
+          label="52:20:fc:0c:df:53",
+          profile="network.presence",
+          type="LAN"
+      },
+  })
     self.try_create_device_calls = {}
     self.scheduled_function()
     lu.assertItemsEquals(self.try_create_device_calls, {})
