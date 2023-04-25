@@ -10,9 +10,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@main
-#       - uses: leafo/gh-actions-lua@master
-      - run: sudo apt install lua
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      - uses: leafo/gh-actions-lua@master
+      - run: bower install https://github.com/bluebird75/luaunit.git.
