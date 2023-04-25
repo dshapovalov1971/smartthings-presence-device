@@ -13,6 +13,5 @@ jobs:
       - uses: leafo/gh-actions-lua@master
       - run: |
           git clone https://github.com/bluebird75/luaunit.git
-          ls
           cd luaunit
-          sudo python doit.py install
+          sudo python doit.py help
