@@ -13,5 +13,4 @@ jobs:
       - uses: leafo/gh-actions-lua@master
       - run: |
           git clone https://github.com/bluebird75/luaunit.git
-          cd luaunit
-          sudo python doit.py help
+          echo $LUA_PATH
