@@ -13,6 +13,9 @@ jobs:
     steps:
       - uses: actions/checkout@main
       - uses: leafo/gh-actions-lua@master
-      - run: |
-          git clone https://github.com/bluebird75/luaunit.git
-          echo $LUA_PATH
+      - run: git clone https://github.com/bluebird75/luaunit.git
+      - run: git clone https://github.com/lunarmodules/luacov.git
+      - uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          repo: SmartThingsCommunity/SmartThingsEdgeDrivers
+      - run: ls
