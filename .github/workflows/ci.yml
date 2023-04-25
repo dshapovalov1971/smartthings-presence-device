@@ -8,6 +8,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      LUA_PATH: src/?.lua:src/?/init.lua:luaunit/?.lua
     steps:
       - uses: actions/checkout@main
       - uses: leafo/gh-actions-lua@master
