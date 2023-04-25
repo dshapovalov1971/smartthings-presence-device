@@ -10,9 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@main
-      - uses: leafo/gh-actions-lua@master
-      - name: Run a one-line script
-        run: echo Hello, world!
+#       - uses: leafo/gh-actions-lua@master
+      - run: sudo apt install lua
       - name: Run a multi-line script
         run: |
           echo Add other actions to build,
