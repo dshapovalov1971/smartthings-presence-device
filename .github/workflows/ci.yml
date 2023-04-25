@@ -19,5 +19,5 @@ jobs:
         with:
           repo: SmartThingsCommunity/SmartThingsEdgeDrivers
           regex: true
-          file: lua_libs-api_*
+          file: lua_libs-api_.*\.tar\.gz
       - run: ls
