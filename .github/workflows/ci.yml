@@ -11,4 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@main
       - uses: leafo/gh-actions-lua@master
-      - run: bower install https://github.com/bluebird75/luaunit.git.
+      - run: |
+          git clone git@github.com:bluebird75/luaunit.git
+          sudo python doit.py install
