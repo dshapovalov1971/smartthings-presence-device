@@ -21,4 +21,4 @@ jobs:
           latest: true
           fileName: lua_libs-api_*.tar.gz
       - run: tar -xvzf lua_libs-api_*
-      - run: ls
+      - run: lua -lluacov test/unit_tests.lua
