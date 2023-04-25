@@ -15,9 +15,9 @@ jobs:
       - uses: leafo/gh-actions-lua@master
       - run: git clone https://github.com/bluebird75/luaunit.git
       - run: git clone https://github.com/lunarmodules/luacov.git
-      - uses: dsaltares/fetch-gh-release-asset@master
+      - uses: robinraju/release-downloader@main
         with:
-          repo: SmartThingsCommunity/SmartThingsEdgeDrivers
-          regex: true
-          file: lua_libs-api_.*\.tar\.gz
+          repository: SmartThingsCommunity/SmartThingsEdgeDrivers
+          latest: true
+          fileName: lua_libs-api_.*\.tar\.gz
       - run: ls
