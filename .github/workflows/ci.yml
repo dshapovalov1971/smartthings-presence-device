@@ -21,6 +21,6 @@ jobs:
           latest: true
           fileName: lua_libs-api_*.tar.gz
       - run: tar -xvzf lua_libs-api_*
-      - run: exports LUA_PATH=$(find lua_libs-api_* -type d -maxdepth 0 -printf "%p/?.lua;%p/?/init.lua;")$LUA_PATH
+      - run: export LUA_PATH=$(find lua_libs-api_* -type d -maxdepth 0 -printf "%p/?.lua;%p/?/init.lua;")$LUA_PATH
       - run: echo $LUA_PATH
 #       - run: lua -lluacov test/unit_tests.lua
