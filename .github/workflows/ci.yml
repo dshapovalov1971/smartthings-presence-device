@@ -46,7 +46,7 @@ jobs:
         with:
           repository: SmartThingsCommunity/smartthings-cli
           latest: true
-          fileName: smartthings-linux-arm64.tar.gz
+          fileName: smartthings-linux-x64.tar.gz
       - name: Unpack SmartThings CLI 
         run: tar -xvzf smartthings-*
       - run: ./smartthings --version
