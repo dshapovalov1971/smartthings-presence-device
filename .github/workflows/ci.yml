@@ -49,4 +49,4 @@ jobs:
           fileName: smartthings-linux-arm64.tar.gz
       - name: Unpack SmartThings CLI 
         run: tar -xvzf smartthings-linux-arm64.tar.gz
-      - run: ls
+      - run: smartthings --version
