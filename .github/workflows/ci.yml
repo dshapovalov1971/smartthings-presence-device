@@ -47,5 +47,5 @@ jobs:
           repository: SmartThingsCommunity/smartthings-cli
           latest: true
           fileName: smartthings-linux-arm64.tar.gz
-      - run: cat /etc/release
+      - run: cat /etc/os-release
       
