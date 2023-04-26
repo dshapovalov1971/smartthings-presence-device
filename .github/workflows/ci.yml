@@ -22,6 +22,6 @@ jobs:
           fileName: lua_libs-api_*.tar.gz
       - run: tar -xvzf lua_libs-api_*
       - run: |
-          TEST_PATH=$LUA_PATH$( find ./lua_libs-api_* -type d -printf ":%p" )
+          TEST_PATH=$LUA_PATH$( find ./lua_libs-api_* -type d -maxdepth 1 -printf "%p;" )
           echo $TEST_PATH
 #       - run: lua -lluacov test/unit_tests.lua
