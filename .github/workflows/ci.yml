@@ -54,5 +54,5 @@ jobs:
           CHANNEL=$(./smartthings edge:channels -j -t=${{secrets.ST_PAM_TOKEN}} | jq '.[] | select(.name=="DSH").channelId')
           ./smartthings devices -j -t=${{secrets.ST_PAM_TOKEN}} --type=HUB | jq '.[].deviceId' | tr -d \" |
             while IFS= read -r deviceId; do
-              ./smartthings edge:drivers:package -I -t=${{secrets.ST_PAM_TOKEN}} --channel=$CHANNEL --hub=$deviceId;
+              ./smartthings edge:drivers:package -t=${{secrets.ST_PAM_TOKEN}} --channel=$CHANNEL --hub=$deviceId;
             done
