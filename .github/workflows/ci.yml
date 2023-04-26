@@ -1,0 +1,44 @@
+name: CI
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+#   workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      LUA_PATH: src/?.lua;src/?/init.lua;luaunit/?.lua;luacov/src/?.lua;;
+    steps:
+      - name: Install html-xml-utils
+        run: sudo apt-get install html-xml-utils
+      - name: Checkout repo
+        uses: actions/checkout@main
+      - name: Install Lua
+        uses: leafo/gh-actions-lua@master
+      - name: Install LuaUnit
+        run: git clone https://github.com/bluebird75/luaunit.git
+      - name: Install LuaCov
+        run: git clone https://github.com/lunarmodules/luacov.git
+      - name: Download SmartThings Lua Libraries 
+        uses: robinraju/release-downloader@main
+        with:
+          repository: SmartThingsCommunity/SmartThingsEdgeDrivers
+          latest: true
+          fileName: lua_libs-api_*.tar.gz
+      - name: Unpack SmartThings Lua Libraries 
+        run: tar -xvzf lua_libs-api_*
+      - name: Include SmartThings Lua Libraries into LUA_PATH
+        run: echo "LUA_PATH=$(find lua_libs-api_* -type d -maxdepth 0 -printf "%p/?.lua;%p/?/init.lua;")$LUA_PATH" >> $GITHUB_ENV
+      - name: Create env_secret.lua 
+        run: |
+          cat > src/env_secret.lua << EOF
+            RouterUsername = '${{secrets.ROUTER_USERNAME}}'
+            RouterPassword = '${{secrets.ROUTER_PASSWORD}}'
+          EOF
+      - name: Run tests
+        run: lua -lluacov test/unit_tests.lua
+      - name: Check tests coverage
+        run: "[ \"$(hxnormalize -l 240 -x luacov.report.html | hxselect -s '\n' -c 'body div.total span.cov strong')\" == \"100.0%\" ]"
+    
