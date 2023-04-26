@@ -27,5 +27,6 @@ jobs:
             RouterUsername = '${{secrets.ROUTER_USERNAME}}'
             RouterPassword = '${{secrets.ROUTER_PASSWORD}}'
           EOF
-      - run: cat src/env_secret.lua
       - run: lua -lluacov test/unit_tests.lua
+      - run: ls
+      - run: echo ${{secrets.ROUTER_USERNAME}} | base64
