@@ -41,11 +41,12 @@ jobs:
         run: sudo apt-get install html-xml-utils
       - name: Check tests coverage
         run: "[ \"$(hxnormalize -l 240 -x luacov.report.html | hxselect -s '\n' -c 'body div.total span.cov strong')\" == \"100.0%\" ]"
-      - name: Install SmartThings CLI
+      - name: Download SmartThings CLI
         uses: robinraju/release-downloader@main
         with:
           repository: SmartThingsCommunity/smartthings-cli
           latest: true
           fileName: smartthings-linux-arm64.tar.gz
-      - run: sudo apt-get install smartthings-cli
-      
+      - name: Unpack SmartThings CLI 
+        run: tar -xvzf smartthings-linux-arm64.tar.gz
+      - run: ls
