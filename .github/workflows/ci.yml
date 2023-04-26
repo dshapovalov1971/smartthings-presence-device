@@ -29,5 +29,5 @@ jobs:
             RouterPassword = '${{secrets.ROUTER_PASSWORD}}'
           EOF
       - run: lua -lluacov test/unit_tests.lua
-      - run: "[ \"$(hxnormalize -l 240 -x luacov.report.html | hxselect -s '\n' -c 'body div.total span.cov strong')\" == \"100.0%\" ] && echo 'true' || echo 'false'"
+      - run: "[ \"$(hxnormalize -l 240 -x luacov.report.html | hxselect -s '\n' -c 'body div.total span.cov strong')\" == \"100.0%\" ]"
     
