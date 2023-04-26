@@ -48,6 +48,6 @@ jobs:
           latest: true
           fileName: smartthings-linux-x64.tar.gz
       - name: Unpack SmartThings CLI 
-        run: tar -xvzf smartthings-*
+        run: tar -xvzf smartthings-linux-x64.tar.gz
       - name: Deploy driver
-        run: ./smartthings edge:drivers:package -I -t ${{secrets.ST_PAM_TOKEN}}
+        run: ./smartthings edge:drivers:package -I -t=${{secrets.ST_PAM_TOKEN}} --channel=1
