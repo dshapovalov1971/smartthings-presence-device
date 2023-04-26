@@ -9,7 +9,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      LUA_PATH: src/?.lua;src/?/init.lua;luaunit/?.lua;luacov/src/?.lua;;
+      LUA_PATH: src/?.lua;src/?/init.lua;luaunit/?.lua;luacov/src/?.lua;lua_libs-api_*/?.lua;lua_libs-api_*/?/init.lua;;
     steps:
       - uses: actions/checkout@main
       - uses: leafo/gh-actions-lua@master
