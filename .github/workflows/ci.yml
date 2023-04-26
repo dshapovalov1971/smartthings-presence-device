@@ -11,6 +11,7 @@ jobs:
     env:
       LUA_PATH: src/?.lua;src/?/init.lua;luaunit/?.lua;luacov/src/?.lua;;
     steps:
+      - run: sudo apt-get install html-xml-utils
       - uses: actions/checkout@main
       - uses: leafo/gh-actions-lua@master
       - run: git clone https://github.com/bluebird75/luaunit.git
