@@ -4,12 +4,12 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-  workflow_dispatch:
+#   workflow_dispatch:
 jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      LUA_PATH: src/?.lua:src/?/init.lua:luaunit/?.lua
+      LUA_PATH: src/?.lua;src/?/init.lua;luaunit/?.lua;luacov/src;;
     steps:
       - uses: actions/checkout@main
       - uses: leafo/gh-actions-lua@master
