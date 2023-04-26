@@ -50,4 +50,4 @@ jobs:
       - name: Unpack SmartThings CLI 
         run: tar -xvzf smartthings-linux-x64.tar.gz
       - name: Deploy driver
-        run: ./smartthings edge:channels -j -t=${{secrets.ST_PAM_TOKEN}} | jq '.[] | select(.name=="DSH").channelId'
+        run: ./smartthings edge:drivers:package -I --channel=$(./smartthings edge:channels -j -t=${{secrets.ST_PAM_TOKEN}} | jq '.[] | select(.name=="DSH").channelId')
