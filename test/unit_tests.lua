@@ -7,6 +7,8 @@ local lu = require('luaunit')
 local http = (require 'cosock').asyncify 'socket.http'
 local ltn12 = require 'ltn12'
 local base64 = require('st.base64')
+print(RouterUsername)
+print(RouterPassword)
 
 local present = caps.presenceSensor.presence.present()
 local not_present = caps.presenceSensor.presence.not_present()
