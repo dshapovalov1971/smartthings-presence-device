@@ -11,8 +11,6 @@ jobs:
     env:
       LUA_PATH: src/?.lua;src/?/init.lua;luaunit/?.lua;luacov/src/?.lua;;
     steps:
-      - name: Install html-xml-utils
-        run: sudo apt-get install html-xml-utils
       - name: Checkout repo
         uses: actions/checkout@main
       - name: Install Lua
@@ -39,6 +37,15 @@ jobs:
           EOF
       - name: Run tests
         run: lua -lluacov test/unit_tests.lua
+      - name: Install html-xml-utils
+        run: sudo apt-get install html-xml-utils
       - name: Check tests coverage
         run: "[ \"$(hxnormalize -l 240 -x luacov.report.html | hxselect -s '\n' -c 'body div.total span.cov strong')\" == \"100.0%\" ]"
-    
+      - name: Install SmartThings CLI
+        uses: robinraju/release-downloader@main
+        with:
+          repository: SmartThingsCommunity/smartthings-cli
+          latest: true
+          fileName: smartthings-linux-arm64.tar.gz
+      - run: cat /etc/release
+      
