@@ -10,12 +10,12 @@ local Router = {}
 
   function Router.connected_devices()
     local RouterUrl = 'http://192.168.0.1/AttachedDevices_new.htm'
-    local rc = {}
     local resp = ''
     for _ = 1, 10 do
       if not XSRF_TOKEN then
         XSRF_TOKEN = ({ http.request(RouterUrl)})[3]['set-cookie']
       end
+      local rc = {}
       local _, code = http.request {
         url = RouterUrl,
         sink = ltn12.sink.table(rc),
@@ -36,13 +36,12 @@ local Router = {}
         end,
       }
 
+      local b = table.concat(rc)
       if code == 401 then
         XSRF_TOKEN = nil
-      elseif code == 200 then
-        resp = table.concat(rc)
-        if resp:find('</html>') then
-          break
-        end
+      elseif code == 200 and b:find('</html>') then
+        resp = b
+        break
       end
     end
     local r = {}

@@ -90,9 +90,12 @@ local mockRouterResponse = [[
         return TableTagValueList.split("|");
     }</html>
 ]]
+local http_request_xsrf_cnt = 0
+local http_request_devices_cnt = 0
 http.request = function(p)
   if type(p) == 'string' then
     lu.assertEquals(p, RouterUrl)
+    http_request_xsrf_cnt = http_request_xsrf_cnt + 1
     return 1, 200, {['set-cookie'] = 'cookie'}
   else
     lu.assertEquals(p.url, RouterUrl)
@@ -110,6 +113,7 @@ http.request = function(p)
     lu.assertEquals(sock.class, 'tcp{master}')
     lu.assertEquals(sock.timeout, 5)
     ltn12.pump.all(ltn12.source.string(mockRouterResponse), p.sink)
+    http_request_devices_cnt = http_request_devices_cnt + 1
     return 1, httpCode
   end
 end
@@ -117,12 +121,38 @@ end
 TestRouter = {}
   function TestRouter:setUp()
     self.router = require('router')
+    self.mockRouterResponse = mockRouterResponse
+    http_request_devices_cnt = 0
+    http_request_xsrf_cnt = 0
   end
   function TestRouter:test()
     lu.assertEquals(self.router.connected_devices(), mockDeviceTable)
-  end
+    lu.assertEquals(http_request_xsrf_cnt, 1)
+    lu.assertEquals(http_request_devices_cnt, 1)
+    http_request_devices_cnt = 0
+    http_request_xsrf_cnt = 0
+    httpCode = 401
+    lu.assertError(self.router.connected_devices)
+    lu.assertEquals(http_request_xsrf_cnt, 9)
+    lu.assertEquals(http_request_devices_cnt, 10)
+    http_request_devices_cnt = 0
+    http_request_xsrf_cnt = 0
+    httpCode = 200
+    mockRouterResponse = [[
+      {
+      var TableTagValueList = '4|1|192.168.0.24|c8:b8:2f:86:a5:21|eero|1|192.168.0.35|7c:72:e4:90:26:08|--|1|192.168.0.42|00:14:ee:03:66:b7|MyCloud-XEC16K|1|192.168.0.108<br>2601:19b:c401:59b0:478b:7f77:e8f7:99d9|5c:96:66:dc:88:68|--|';
+      var TableTagValueList = '9|DSHc|1|192.168.0.34|0c:1c:57:a9:01:0b|Ring-a9010b|DSHc|1|192.168.0.38|30:45:11:44:80:31|Ring-448031|DSHc|1|192.168.0.39|f0:45:da:3c:cd:37|Ring-3ccd37|DSHc|1|192.168.0.33|34:20:03:57:2f:9c||DSHc|1|192.168.0.23|34:20:03:57:18:e1||DSHc|1|192.168.0.29|34:20:03:2d:d5:74||DSHc|1|192.168.0.17|00:04:20:ef:e0:2f|HarmonyHub|DSHc|1|192.168.0.28|ac:ae:19:ba:00:8f|Basement|DSHc|1|192.168.0.9|00:80:92:8c:df:d1|BRW0080928CDFD1|';
+      var TableTagValueList = '12|DSHc-5G|1|192.168.0.14<br>2601:19b:c401:59b0:f155:cd68:8c62:457|6a:2a:ef:27:d1:05|SM-R860|DSHc-5G|1|192.168.0.32<br>2601:19b:c401:59b0:f136:51d6:8264:a678|00:01:02:f5:72:fa|iphone|DSHc-5G|1|192.168.0.12<br>2601:19b:c401:59b0:dd4f:a49:e0a7:baf0|52:20:fc:0c:df:53||DSHc-5G|1|192.168.0.16|18:b4:30:bb:bc:90|09AA01AC53160FAW|DSHc-5G|1|192.168.0.36<br>2601:19b:c401:59b0:8194:a77c:2a38:a149|28:6d:97:70:0c:79|hubv3-3011000927|DSHc-5G|1|192.168.0.31<br>2601:19b:c401:59b0:d388:26d6:8a1b:2572|e4:fd:45:d3:22:e1|LAPTOP-VF7ADLII|DSHc-5G|1|192.168.0.19<br>2601:19b:c401:59b0:cc61:8ae4:1468:5f4b|d4:63:c6:62:8b:23|android-5ba69c37733ed8e8|DSHc-5G|1|192.168.0.25|e0:4f:43:a4:2a:35|RingPro-35|DSHc-5G|1|192.168.0.54|18:b4:30:cf:2c:13|09AA01RC321700CN|DSHc-5G|1|192.168.0.20|18:b4:30:bb:65:c3|09AA01AC52160U70|DSHc-5G|1|192.168.0.11<br>2601:19b:c401:59b0:c2ee:40ff:fe8e:11f0|c0:ee:40:8e:11:f0|MyArcticSpa0|DSHc-5G|1|192.168.0.98|10:59:32:71:bd:6c|TVRoomRoku|';
+      }
+    ]]
+    lu.assertError(self.router.connected_devices)
+    lu.assertEquals(http_request_xsrf_cnt, 1)
+    lu.assertEquals(http_request_devices_cnt, 10)
+end
   function TestRouter:tearDown()
     package.loaded['router'] = nil
+    mockRouterResponse = self.mockRouterResponse
+    httpCode = 200
   end
 
 
