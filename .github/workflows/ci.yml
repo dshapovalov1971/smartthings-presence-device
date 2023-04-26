@@ -47,5 +47,5 @@ jobs:
           repository: SmartThingsCommunity/smartthings-cli
           latest: true
           fileName: smartthings-linux-arm64.tar.gz
-      - run: cat /etc/os-release
+      - run: sudo apt-get install smartthings-cli
       
